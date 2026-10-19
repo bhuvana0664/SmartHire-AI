@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applied Jobs | SmartHire AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            margin: 0;
+            padding: 30px;
+        }
+        h1 {
+            color: #243b64;
+            text-align: center;
+        }
+        .application {
+            background: white;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+        .status {
+            color: #b7791f;
+            font-weight: bold;
+        }
+        a {
+            color: #2457c5;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Applied Jobs</h1>
+
+    {% for application in applications %}
+        <div class="application">
+            <h2>{{ application.job.title }}</h2>
+            <p><strong>Company:</strong> {{ application.job.company }}</p>
+            <p><strong>Name:</strong> {{ application.full_name }}</p>
+            <p><strong>Applied Date:</strong> {{ application.applied_date|date:"d M Y" }}</p>
+            <p class="status">Status: Application Submitted</p>
+        </div>
+    {% empty %}
+        <div class="application">
+            <p>You haven't applied for any jobs yet.</p>
+        </div>
+    {% endfor %}
+
+    <p style="text-align:center;">
+        <a href="/">Back to Home</a>
+    </p>
+
+</body>
+</html>
