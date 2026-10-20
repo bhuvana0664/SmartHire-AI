@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Seeker Dashboard | SmartHire AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6ff;
+            color: #25345b;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: white;
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 3px 15px rgba(40, 50, 100, 0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #5145cd;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #475569;
+            font-weight: bold;
+        }
+
+        .logout {
+            background: #fff0f0;
+            color: #c62828;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #5145cd, #7868f5, #8b5cf6);
+            color: white;
+            padding: 40px 5%;
+        }
+
+        .hero h1 {
+            font-size: clamp(26px, 4vw, 36px);
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 22px 35px;
+        }
+
+        .section-heading {
+            margin: 28px 0 18px;
+            font-size: 23px;
+            color: #25345b;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+        }
+
+        .card, .application {
+            background: white;
+            padding: 23px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(44, 55, 100, 0.07);
+            border: 1px solid #e9eafe;
+            overflow-wrap: anywhere;
+        }
+
+        .card h3 {
+            color: #5145cd;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #25345b;
+        }
+
+        .muted {
+            color: #718096;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            background: linear-gradient(120deg, #5145cd, #7868f5);
+            color: white;
+            padding: 11px 17px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .application {
+            margin-bottom: 18px;
+            border-left: 5px solid #7868f5;
+        }
+
+        .application h3 {
+            color: #5145cd;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .application p {
+            margin: 7px 0;
+        }
+
+        .status {
+            display: inline-block;
+            background: #eeecff;
+            color: #5145cd;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .empty {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            color: #718096;
+            border: 1px solid #e9eafe;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 22px 0;
+            text-decoration: none;
+            font-weight: bold;
+            color: #5145cd;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            color: #718096;
+            background: white;
+            border-top: 1px solid #e9eafe;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .hero {
+                padding: 30px 22px;
+            }
+
+            .container {
+                padding: 0 15px 25px;
+            }
+
+            .card, .application {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">SmartHire AI</div>
+
+    <div class="nav-actions">
+        <a href="/" class="nav-link">Home</a>
+
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<header class="hero">
+    <h1>Welcome back, {{ request.user.username }}! 👋</h1>
+    <p>Your career journey starts here.</p>
+    <p>Track your applications and discover new opportunities.</p>
+</header>
+
+<main class="container">
+
+    <h2 class="section-heading">Dashboard Overview</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>👤 My Profile</h3>
+            <p><strong>Username:</strong> {{ request.user.username }}</p>
+            <p><strong>Email:</strong>
+                {{ request.user.email|default:"Not provided" }}
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📊 My Applications</h3>
+            <p class="stat-number">{{ applications|length }}</p>
+            <p class="muted">Total applications submitted</p>
+        </div>
+
+        <div class="card">
+            <h3>💼 Find Jobs</h3>
+            <p class="muted">Explore opportunities that match your skills.</p>
+            <a href="/" class="primary-btn">Browse Available Jobs</a>
+        </div>
+
+    </div>
+
+    <h2 class="section-heading">My Applied Jobs</h2>
+
+    {% for application in applications %}
+        <div class="application">
+
+            <h3>{{ application.job.title }}</h3>
+
+            <p>
+                <strong>🏢 Company:</strong>
+                {{ application.job.company }}
+            </p>
+
+            <p>
+                <strong>📍 Location:</strong>
+                {{ application.job.location }}
+            </p>
+
+            <p>
+                <strong>📅 Applied Date:</strong>
+                {{ application.applied_date|date:"d M Y" }}
+            </p>
+
+            <p>
+                <strong>Application Status:</strong>
+                <span class="status">{{ application.status }}</span>
+            </p>
+
+            <a href="{% url 'job_detail' application.job.id %}"
+               class="primary-btn">
+                View Job Details
+            </a>
+
+        </div>
+    {% empty %}
+        <div class="empty">
+            <h3>No applications yet</h3>
+            <p>You haven't applied for any jobs yet. Start exploring!</p>
+            <a href="/" class="primary-btn">Explore Jobs</a>
+        </div>
+    {% endfor %}
+
+    <a href="/" class="back-link">← Back to Home</a>
+
+</main>
+
+<footer>
+    <p>© 2026 SmartHire AI | Find Your Next Opportunity.</p>
+</footer>
+
+</body>
+</html>

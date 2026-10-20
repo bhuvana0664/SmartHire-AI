@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analysis | SmartHire AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 25px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #2457c5;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #667085;
+            margin-bottom: 25px;
+        }
+
+        .score-card {
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            background: #eef4ff;
+            border-radius: 12px;
+        }
+
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2457c5;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section h2 {
+            font-size: 19px;
+        }
+
+        .skill {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 6px;
+            background: #e8f7ed;
+            color: #176b35;
+        }
+
+        .missing {
+            background: #fff0ed;
+            color: #b42318;
+        }
+
+        .empty {
+            color: #667085;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 18px;
+            background: #2457c5;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .note {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #667085;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SmartHire AI</h1>
+        <p class="subtitle">Resume Analysis Report</p>
+
+        <h2>{{ application.full_name }}</h2>
+        <p><strong>Job:</strong> {{ application.job.title }}</p>
+        <p><strong>Company:</strong> {{ application.job.company }}</p>
+
+        <div class="score-card">
+            <div>Resume Keyword Match</div>
+            <div class="score">{{ score }}%</div>
+            <p>
+                {{ matched_skills|length }}
+                of
+                {{ required_skills|length }}
+                listed requirements matched
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Matched Skills</h2>
+
+            {% for skill in matched_skills %}
+                <span class="skill">{{ skill }}</span>
+            {% empty %}
+                <p class="empty">No matching keywords found.</p>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>Skills to Review</h2>
+
+            {% for skill in missing_skills %}
+                <span class="skill missing">{{ skill }}</span>
+            {% empty %}
+                <p class="empty">
+                    All listed requirement keywords were found.
+                </p>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>All Job Requirements</h2>
+
+            {% for skill in required_skills %}
+                <span class="skill">{{ skill }}</span>
+            {% empty %}
+                <p class="empty">
+                    No job requirements have been entered.
+                </p>
+            {% endfor %}
+        </div>
+
+        <p class="note">
+            This score is based on keyword matching only.
+            It is not a measure of a candidate's complete ability
+            or suitability. Review the original resume and assess
+            every candidate fairly before making recruitment decisions.
+        </p>
+
+        <a href="{% url 'recruiter_dashboard' %}" class="button">
+            Back to Recruiter Dashboard
+        </a>
+    </div>
+</body>
+</html>

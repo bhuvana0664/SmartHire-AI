@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SmartHire AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef0ff, #f7f4ff, #e9edff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #25345b;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 36px;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(65, 60, 150, 0.13);
+            border: 1px solid #e8e7ff;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 29px;
+            font-weight: bold;
+            color: #5145cd;
+            margin-bottom: 8px;
+        }
+
+        .icon {
+            width: 64px;
+            height: 64px;
+            margin: 18px auto;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #5145cd, #8b5cf6);
+            color: white;
+            font-size: 29px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 23px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .error {
+            background: #fff0f0;
+            color: #b42318;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 15px 0 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d8dcef;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: #7164e8;
+            box-shadow: 0 0 0 3px rgba(113, 100, 232, 0.12);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 24px;
+            background: linear-gradient(120deg, #5145cd, #7868f5);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .login-btn:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        .register-text {
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+            margin-top: 23px;
+        }
+
+        a {
+            color: #5145cd;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #98a2b3;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                padding: 27px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="logo">SmartHire AI</div>
+
+        <div class="icon" aria-hidden="true">👋</div>
+
+        <h2>Welcome Back!</h2>
+        <p class="subtitle">Login to continue your career journey.</p>
+
+        {% for message in messages %}
+            <p class="error">{{ message }}</p>
+        {% endfor %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit" class="login-btn">
+                Login to Account →
+            </button>
+        </form>
+
+        <p class="register-text">
+            Don't have an account?
+            <a href="{% url 'register' %}">Create Account</a>
+        </p>
+
+        <a href="/" class="back-link">← Back to Home</a>
+
+        <p class="footer">
+            © 2026 SmartHire AI | Your Career, Your Future.
+        </p>
+
+    </main>
+
+</body>
+</html>

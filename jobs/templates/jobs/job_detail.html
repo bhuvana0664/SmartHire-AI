@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ job.title }} | SmartHire AI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            color: #222;
+        }
+
+        header {
+            background: #173b70;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        h2 {
+            color: #173b70;
+        }
+
+        .salary {
+            color: green;
+            font-weight: bold;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 18px;
+            background: #173b70;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>SmartHire AI</h1>
+    <p>Job Details</p>
+</header>
+<a href="{% url 'apply_job' job.id %}">
+    <button type="button">Apply Now</button>
+</a>
+
+<div class="container">
+
+    <h2>{{ job.title }}</h2>
+
+    <p><strong>Company:</strong> {{ job.company }}</p>
+
+    <p><strong>Location:</strong> {{ job.location }}</p>
+
+    <p class="salary">
+        <strong>Salary:</strong> {{ job.salary }}
+    </p>
+
+    <h3>Job Description</h3>
+    <p>{{ job.description }}</p>
+
+    <h3>Requirements</h3>
+    <p>{{ job.requirements }}</p>
+
+    <a href="/" class="back-button">Back to Jobs</a>
+
+</div>
+
+</body>
+</html>

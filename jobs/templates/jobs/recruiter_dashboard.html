@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Dashboard | SmartHire AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6ff;
+            color: #25345b;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: #ffffff;
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            box-shadow: 0 3px 15px rgba(40, 50, 100, 0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #5145cd;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #475569;
+            font-weight: bold;
+        }
+
+        .logout {
+            background: #fff0f0;
+            color: #c62828;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #5145cd, #7868f5, #8b5cf6);
+            color: white;
+            padding: 42px 5%;
+        }
+
+        .hero h1 {
+            font-size: clamp(26px, 4vw, 36px);
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 22px 35px;
+        }
+
+        .section-heading {
+            margin: 30px 0 18px;
+            font-size: 23px;
+            color: #25345b;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+        }
+
+        .card, .application {
+            background: white;
+            padding: 23px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(44, 55, 100, 0.07);
+            border: 1px solid #e9eafe;
+            margin-bottom: 18px;
+            overflow-wrap: anywhere;
+        }
+
+        .card h3 {
+            color: #5145cd;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 27px;
+            font-weight: bold;
+            color: #25345b;
+        }
+
+        .muted {
+            color: #718096;
+        }
+
+        .primary-btn, .button {
+            display: inline-block;
+            background: linear-gradient(120deg, #5145cd, #7868f5);
+            color: white;
+            padding: 11px 17px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+
+        .primary-btn:hover, .button:hover {
+            opacity: 0.9;
+        }
+
+        .job-title {
+            font-size: 19px;
+            color: #25345b;
+            margin-bottom: 12px;
+        }
+
+        .job-details p, .application p {
+            margin: 7px 0;
+        }
+
+        .company-label {
+            display: inline-block;
+            background: #eeecff;
+            color: #5145cd;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .application {
+            border-left: 5px solid #7868f5;
+        }
+
+        .application h3 {
+            color: #5145cd;
+            margin-bottom: 10px;
+        }
+
+        .status-form {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        select {
+            padding: 10px;
+            border: 1px solid #d5d8eb;
+            border-radius: 8px;
+            background: white;
+            color: #25345b;
+            max-width: 100%;
+        }
+
+        .update-btn {
+            background: #25345b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        a {
+            color: #5145cd;
+        }
+
+        .empty {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 20px 0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px;
+            color: #718096;
+            background: white;
+            border-top: 1px solid #e9eafe;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .hero {
+                padding: 30px 22px;
+            }
+
+            .container {
+                padding: 0 15px 25px;
+                margin-top: 20px;
+            }
+
+            .card, .application {
+                padding: 18px;
+            }
+
+            .status-form {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .status-form select,
+            .status-form button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">SmartHire AI</div>
+
+    <div class="nav-actions">
+        <a class="nav-link" href="/">Home</a>
+
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="logout" type="submit">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<header class="hero">
+    <h1>Recruiter Dashboard 👋</h1>
+    <p>Welcome, {{ request.user.username }}!</p>
+    <p>
+        Company:
+        {{ request.user.recruiter_profile.company_name }}
+    </p>
+    <p>Manage your jobs and discover the right candidates.</p>
+</header>
+
+<main class="container">
+
+    <h2 class="section-heading">Dashboard Overview</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>💼 My Jobs</h3>
+            <p class="stat-number">{{ jobs|length }}</p>
+            <p class="muted">Total jobs posted</p>
+        </div>
+
+        <div class="card">
+            <h3>👥 Applicants</h3>
+            <p class="stat-number">{{ applications|length }}</p>
+            <p class="muted">Total applications received</p>
+        </div>
+
+        <div class="card">
+            <h3>🏢 Company</h3>
+            <p>{{ request.user.recruiter_profile.company_name }}</p>
+            <span class="company-label">Recruiter Account</span>
+        </div>
+    </div>
+
+    <h2 class="section-heading">My Posted Jobs</h2>
+
+    <p style="margin-bottom: 20px;">
+        <a href="{% url 'post_job' %}" class="primary-btn">
+            + Post a New Job
+        </a>
+    </p>
+
+    {% for job in jobs %}
+        <div class="card job-details">
+            <h3 class="job-title">{{ job.title }}</h3>
+            <p><strong>📍 Location:</strong> {{ job.location }}</p>
+            <p><strong>💰 Salary:</strong> {{ job.salary }}</p>
+            <p>
+                <strong>📅 Posted:</strong>
+                {{ job.posted_date|date:"d M Y" }}
+            </p>
+            {% if job.description %}
+                <p>{{ job.description|truncatewords:25 }}</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="empty">
+            You haven't posted any jobs yet. Click "Post a New Job" to get started.
+        </div>
+    {% endfor %}
+
+    <h2 class="section-heading">Applicants</h2>
+
+    {% for application in applications %}
+        <div class="application">
+            <h3>{{ application.full_name }}</h3>
+
+            <p>
+                <strong>Job:</strong>
+                {{ application.job.title }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ application.email }}
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                {{ application.phone }}
+            </p>
+
+            <p>
+                <strong>Applied:</strong>
+                {{ application.applied_date|date:"d M Y" }}
+            </p>
+
+            <p>
+                <strong>Current Status:</strong>
+                {{ application.status }}
+            </p>
+
+            <a href="{% url 'analyze_resume' application.id %}"
+               target="_blank"
+               class="button">
+                🤖 Analyze Resume
+            </a>
+
+            {% if application.resume %}
+                <p>
+                    <a href="{{ application.resume.url }}" target="_blank">
+                        📄 View / Download Resume
+                    </a>
+                </p>
+            {% endif %}
+
+            <form method="POST"
+                  action="{% url 'update_application_status' application.id %}"
+                  class="status-form">
+                {% csrf_token %}
+
+                <label for="status-{{ application.id }}">
+                    <strong>Update Status:</strong>
+                </label>
+
+                <select id="status-{{ application.id }}"
+                        name="status"
+                        required>
+                    <option value="Pending"
+                        {% if application.status == 'Pending' %}selected{% endif %}>
+                        Pending
+                    </option>
+
+                    <option value="Shortlisted"
+                        {% if application.status == 'Shortlisted' %}selected{% endif %}>
+                        Shortlisted
+                    </option>
+
+                    <option value="Rejected"
+                        {% if application.status == 'Rejected' %}selected{% endif %}>
+                        Rejected
+                    </option>
+                </select>
+
+                <button type="submit" class="update-btn">
+                    Update Status
+                </button>
+            </form>
+
+            {% if application.cover_letter %}
+                <p><strong>Cover Letter:</strong></p>
+                <p>{{ application.cover_letter|linebreaksbr }}</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="empty">
+            No applications received yet. New applicants will appear here.
+        </div>
+    {% endfor %}
+
+    <a href="/" class="back-link">← Back to Home</a>
+
+</main>
+
+<footer>
+    <p>© 2026 SmartHire AI | Smart Recruitment, Better Careers.</p>
+</footer>
+
+</body>
+</html>
