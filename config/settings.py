@@ -28,8 +28,10 @@ SECRET_KEY = 'django-insecure-pcgu-p4lvhn7+_1gr^5j)z8rn)ktx9ixei#ue!uvki^^k8%5w=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['smart-hire-ai-vdpe.onrender.com']
-
+ALLOWED_HOSTS = [
+    'smart-hire-ai-vdpe.onrender.com',
+    'smarthire-ai-1nhr.onrender.com',
+]
 
 # Application definition
 
