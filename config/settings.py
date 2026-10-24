@@ -88,8 +88,10 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '3306'),
         'OPTIONS': {
-            'ssl': {'ca': ''},
-        },
+    'ssl': {
+        'ca': '/etc/secrets/ca.pem',
+    },
+},
     }
 }
 
